@@ -626,6 +626,15 @@ header label {
 .dark-theme .archive-item-date {
   color: #87878d;
 }
+.post-wrap .sub-title-wrap {
+  margin: 0 0em;
+  padding: 0 0em;
+}
+.post-wrap .sub-title {
+  margin: 0 0em;
+  font-size: 14px;
+  color: #6d6d6d;
+}
 .post-wrap .categories-card {
   margin: 0 auto;
   margin-top: 1em;
@@ -643,13 +652,55 @@ header label {
   width: 45%;
   display: flex;
   align-items: flex-start;
-  margin-top: 2em;
+  margin-top: 1em;
   min-height: 16em;
   padding: 0 2%;
   position: relative;
 }
 .post-wrap .categories-card .card-item .categories {
   overflow: hidden;
+}
+.post-wrap .categories-card .card-item .category-list {
+  font-size: 0.9em;
+  padding: 15px 20px;
+}
+.post-wrap .categories-card .card-item .category-list .category-list-count {
+  margin-left: 8px;
+  font-size: 0.8em;
+  color: color-meta;
+}
+.post-wrap .categories-card .card-item .category-list .category-list-count:before {
+  content: '(';
+}
+.post-wrap .categories-card .card-item .category-list .category-list-count:after {
+  content: ')';
+}
+.post-wrap .categories-card .card-item .category-list ul,
+.post-wrap .categories-card .card-item .category-list ol,
+.post-wrap .categories-card .card-item .category-list dl {
+  list-style: none;
+}
+.post-wrap .categories-card .card-item .category-list ul ul,
+.post-wrap .categories-card .card-item .category-list ol ul,
+.post-wrap .categories-card .card-item .category-list dl ul,
+.post-wrap .categories-card .card-item .category-list ul ol,
+.post-wrap .categories-card .card-item .category-list ol ol,
+.post-wrap .categories-card .card-item .category-list dl ol,
+.post-wrap .categories-card .card-item .category-list ul dl,
+.post-wrap .categories-card .card-item .category-list ol dl,
+.post-wrap .categories-card .card-item .category-list dl dl {
+  margin-left: 20px;
+}
+.post-wrap .categories-card .card-item .category-list ul ul li:before,
+.post-wrap .categories-card .card-item .category-list ol ul li:before,
+.post-wrap .categories-card .card-item .category-list dl ul li:before,
+.post-wrap .categories-card .card-item .category-list ul ol li:before,
+.post-wrap .categories-card .card-item .category-list ol ol li:before,
+.post-wrap .categories-card .card-item .category-list dl ol li:before,
+.post-wrap .categories-card .card-item .category-list ul dl li:before,
+.post-wrap .categories-card .card-item .category-list ol dl li:before,
+.post-wrap .categories-card .card-item .category-list dl dl li:before {
+  content: '> ';
 }
 .tag-cloud-tags {
   margin: 10px 0;
