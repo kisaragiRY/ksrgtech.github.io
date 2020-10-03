@@ -780,10 +780,10 @@ header label {
 .post-wrap .bio-right {
   margin-top: 0em;
   position: relative;
-  height: 22em;
+  height: 20em;
 }
 .post-wrap .bio-right .links {
-  margin-top: 0em;
+  margin-top: -3em;
   position: absolute;
   left: 0em;
 }
