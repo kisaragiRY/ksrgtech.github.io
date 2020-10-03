@@ -796,7 +796,7 @@ header label {
   width: 30%;
 }
 .post-wrap .bio-right p {
-  text-align: left;
+  text-align: right;
   font-weight: bold;
   margin-right: 63px;
 }
