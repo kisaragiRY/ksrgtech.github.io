@@ -778,20 +778,23 @@ header label {
   font-weight: bold;
 }
 .post-wrap .bio-right {
-  margin-top: 4em;
+  margin-top: 0em;
+  position: relative;
+  height: 22em;
+}
+.post-wrap .bio-right .links {
+  margin-top: 0em;
+  position: absolute;
+  left: 0em;
 }
 .post-wrap .bio-right img {
-  float: right;
-  width: 15%;
+  margin-right: 63px;
+  width: 22%;
 }
 .post-wrap .bio-right p {
-  margin-right: 10em;
   text-align: right;
   font-weight: bold;
-}
-.post-wrap .bio-right p .links {
-  margin-top: 4em;
-  float: left;
+  margin-right: 63px;
 }
 .post-wrap p {
   font-size: 1em;
