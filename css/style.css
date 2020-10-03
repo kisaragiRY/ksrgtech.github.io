@@ -765,8 +765,7 @@ header label {
   width: 0;
 }
 .post-wrap .bio {
-  width: 50%;
-  float: left;
+  width: 80%;
   font-size: 16px;
 }
 .post-wrap .bio .name {
@@ -780,19 +779,19 @@ header label {
 }
 .post-wrap .bio-right {
   margin-top: 4em;
-  float: right;
-  width: 40%;
 }
 .post-wrap .bio-right img {
-  width: 100%;
-  margin: 0 auto;
+  float: right;
+  width: 15%;
 }
 .post-wrap .bio-right p {
+  margin-right: 10em;
   text-align: right;
   font-weight: bold;
 }
 .post-wrap .bio-right p .links {
   margin-top: 4em;
+  float: left;
 }
 .post-wrap p {
   font-size: 1em;
