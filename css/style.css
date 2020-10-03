@@ -723,7 +723,6 @@ header label {
 }
 .post-wrap .categories-card .card-item .category-list a:hover {
   color: #2d96bd;
-  transform: scale(1.1);
 }
 .dark-theme .post-wrap .categories-card .card-item .category-list a:hover {
   color: #fff;
