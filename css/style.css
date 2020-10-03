@@ -210,12 +210,18 @@ a:hover {
   text-decoration: none;
   transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease, opacity 0.2s ease;
 }
+html {
+  overflow: scroll;
+}
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent; /* make scrollbar transparent */
+}
 .wrapper {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   width: 100%;
-  max-width: 1272px;
 }
 .navbar {
   height: 4rem;
@@ -780,19 +786,17 @@ header label {
 .post-wrap .bio-right {
   margin-top: 0em;
   position: relative;
-  height: 20em;
 }
 .post-wrap .bio-right .links {
-  margin-top: -3em;
-  position: absolute;
-  left: 0em;
+  margin-top: 0em;
+  text-align: left;
 }
 .post-wrap .bio-right img {
   margin-right: 63px;
-  width: 22%;
+  width: 30%;
 }
 .post-wrap .bio-right p {
-  text-align: right;
+  text-align: left;
   font-weight: bold;
   margin-right: 63px;
 }
