@@ -856,6 +856,9 @@ header label {
   font-size: 2em;
   line-height: 1.5em;
 }
+.post-wrap .post-meta {
+  color: rgba(85,85,85,0.529) !important;
+}
 .dark-theme .post-wrap .post-meta {
   color: #87878d !important;
 }
