@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Kisaragi">
+
+
+
+
+
+<title>【Hexo自定义建站】#1 建站的初衷/成本/工具/主题 | KSRGTech</title>
+
+
+
+    <link rel="icon" href="https://res.cloudinary.com/kisaragiry/image/upload/v1601826746/ksrgtech.com/Website_Favicon_jt5zls.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Kisaragi&#39;s Tech Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives" target="_self">文章</a>
+                
+                    <a class="menu-item" href="/category" target="_self">分类</a>
+                
+                    <a class="menu-item" href="/tag" target="_self">标签</a>
+                
+                    <a class="menu-item" href="/About" target="_self">关于</a>
+                
+                    <a class="menu-item" href="https://ksrgtech.com/en" target="_self">English</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Kisaragi&#39;s Tech Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/About">关于</a>
+                
+                    <a class="menu-item" href="https://ksrgtech.com/en">English</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">展开</a>
+        <a onclick="go_top()">顶部</a>
+        <a onclick="go_bottom()">底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "收起"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "展开"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">【Hexo自定义建站】#1 建站的初衷/成本/工具/主题</h1>
+            
+                <div class="post-meta">
+                     
+                    <i class="randomicons iconperson"></i>
+                    
+                        <a itemprop="author" rel="author" href="/About">Kisaragi</a>
+                    |
+                     
+                    <i class="randomicons iconcalendar"></i>
+                    
+                        <span class="post-time">
+                        <a href="#">October 6, 2020</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">|
+                     
+                    <i class="randomicons iconfolder" ></i>
+                            
+                                <a href="/categories/%E5%AE%9E%E6%93%8D%E9%A1%B9%E7%9B%AE/">实操项目</a>
+                            
+                                <a href="/categories/%E5%AE%9E%E6%93%8D%E9%A1%B9%E7%9B%AE/Hexo%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BB%BA%E7%AB%99/">Hexo自定义建站</a>
+                            
+                        </span>
+                    |
+                    
+                    <i class="randomicons iconnumber"></i> 
+                    
+                        <span class="post-count"s>
+                        <a>792words</a>
+                        </span>
+                    |
+                    
+                    <i class="randomicons icontime"></i> 
+                    
+                        <span class="post-count" >
+                        <a>2min</a>
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <head>
+    <style>
+        .contain{
+            width: 100%;
+        }
+        .left{
+            width: 468px;
+            position: absolute;
+        }
+        .right{
+            width: 30%;
+            margin-left: 500px;
+        }
+        img{
+            width: 100%;
+        }
+    </style>
+</head>
+
+<blockquote>
+<p>为了良好的阅读体验，手机端的同学请横屏阅读此文章</p>
+</blockquote>
+<h2 id="为什么建站"><a href="#为什么建站" class="headerlink" title="为什么建站"></a>为什么建站</h2><p>建站的初衷是<font size=5>记录和分享</font>，记录学习新知识走过的坑和积累的经验，同时分享给读者以便交流，因此小站的定位是一个个人博客。</p>
+<p>博主是非计算机学生，编程基础一般般，学过一点网页的前端和后端，但完全不是能独立编程的程度，小站是博主一点点摸索出来的，<strong>Bug很多还请各路大佬包容一下</strong>。</p>
+<h2 id="建站的成本"><a href="#建站的成本" class="headerlink" title="建站的成本"></a>建站的成本</h2><div class='contain'>
+    <div class='left'>
+        <p></br>本着穷学生的立场，当然是越少花越好，本站目前为止唯一花过钱的就是这个从 <a target="_blank" rel="noopener" href="https://www.godaddy.com/">Godday</a>上购买的两年的域名<a href="https://ksrgtech.com" target="_blank">ksrgtech.com</a> <span style="color:">(ksrg是Kisaragi的缩写)</span>，也不过是一顿海底捞🥘，之后是按每年115元来续费</br>
+        我之后可能还需要CDN的付费服务来加速，文章、图片、访客多了，打开网页的速度会变慢，不过在网站初期，<a target="_blank" rel="noopener" href="https://cloudinary.com/">Cloudinary</a>的免费图片云储存服务已经够我使用了
+        </p>
+    </div>
+    <div class='right'>
+        <img src="https://res.cloudinary.com/kisaragiry/image/upload/v1601979168/ksrgtech.com/%5BHexo%20Site%20Building%5D/1th/9F880CC0-D5A9-4CBF-AD2E-8DD8FAB1E863_uqvu0u.jpg" title="Receipt from Godaddy">
+    </div>
+</div>
+
+
+
+
+<h2 id="使用的工具"><a href="#使用的工具" class="headerlink" title="使用的工具"></a>使用的工具</h2><p>建站初期了解到了很多辅助做个人博客的网站和程序，如<a target="_blank" rel="noopener" href="https://wordpress.com/">WordPress</a>，<a target="_blank" rel="noopener" href="https://www.squarespace.com/">SquareSpace</a>，<a target="_blank" rel="noopener" href="https://www.wix.com/">Wix</a>等等。但最后兜兜转转还是选择了<a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>+<a target="_blank" rel="noopener" href="https://pages.github.com/">Github Pages</a>。<br>对这个网站我有太多的想法想去实现，而借助这些博客网站建站，能实现的功能又限于所购买的套餐，Hexo+Github Pages就非常适合我这种喜欢折腾的穷学生。<br><strong>Hexo</strong>是一个博客框架，用博客框架的话，可以不用一页一页的去修改html文件，因为它能快速的按我们写好的模板文件，生成一堆的静态html网页，省时又省力。<br>之所以用<strong>Github Pages</strong>最主要的原因还是为了省服务器的钱，每个账号可以绑定一个带“.github.io”的免费域名。</p>
+<p>如何建站<strong>请参照下面两篇博文</strong>，前辈们已经写的很详细，这里就不赘述了。</p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/69207995">使用Github Pages和Hexo搭建自己的独立博客【超级详细的小白教程】</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/26625249">GitHub+Hexo 搭建个人网站详细教程</a></p>
+</li>
+</ul>
+<h3 id="建站中遇到的一些坑"><a href="#建站中遇到的一些坑" class="headerlink" title="建站中遇到的一些坑"></a>建站中遇到的一些坑</h3><p><strong>//页面总出现404//</strong><br>有两点需要注意，在Repository的Setting里面</p>
+<ol>
+<li>Repository name应该是[用户名].github.io，不要用成别的名字了。</li>
+<li>GitHub Pages的source目录应该是master。</li>
+</ol>
+<h2 id="选择好看的主题并自定义化"><a href="#选择好看的主题并自定义化" class="headerlink" title="选择好看的主题并自定义化"></a>选择好看的主题并自定义化</h2><p>默认的landscape不难看，但还是想换一个再简洁一点的，而从头写主题又太麻烦，最后在Hexo官网里找到了叫<a target="_blank" rel="noopener" href="https://siricee.github.io/hexo-theme-Chic/">Chic</a>的主题，贴近我想要的效果，于是我就打算在这个主题的基础上来进行自定义修改了。</p>
+<p>在正式开始这个 <a href="/categories/实操项目/Hexo自定义建站" target="_blank"><strong>[Hexo自定义建站]</strong></a>的专题前，说一下博主用的工具。<br>    代码和博文Markdown书写的编辑器都是是<a target="_blank" rel="noopener" href="https://code.visualstudio.com/">Visual Studio Code</a><br>    <strong>因为实在太好用了，感觉完全没有用别的工具的必要。</strong></p>
+<hr>
+<p><strong><font size=5>未完待续…</font></strong><br>转到下一篇：</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>作者:</span>
+                        <span>Kisaragi</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>文章链接:</span>
+                        <span><a href="http://ksrgtech.com/2020/10/06/HandsOnProjects/HexoSiteBuilding/%1/">http://ksrgtech.com/2020/10/06/HandsOnProjects/HexoSiteBuilding/%1/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>许可:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>版权申明:</span>
+                         <span><strong>本网站的所有图片及文字所有权归属本人所有，受国际版权的保护。 如需转载许可请联系 </strong><a href="mailto:ksrgtech98@gmail.com">ksrgtech98@gmail.com</a></span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Hexo/"># Hexo</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/10/06/TheoreticalStudy/ExamPrepForKyotoUni/intro/">【京大备考】专题介绍</a>
+            
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span> © 2020 Kisaragi.  All rights reserved.</span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
