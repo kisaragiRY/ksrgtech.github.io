@@ -12,7 +12,7 @@
 
 
 
-<title>【京大备考】周总结#1 | KSRGTech</title>
+<title>【Hexo自定义建站】#2 主页的修改介绍 | KSRGTech</title>
 
 
 
@@ -177,7 +177,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">【京大备考】周总结#1</h1>
+            <h1 class="post-title">【Hexo自定义建站】#2 主页的修改介绍</h1>
             
                 <div class="post-meta">
                      
@@ -189,7 +189,7 @@
                     <i class="randomicons iconcalendar"></i>
                     
                         <span class="post-time">
-                        <a href="#">October 6, 2020</a>
+                        <a href="#">October 11, 2020</a>
                         </span>
                     
                     
@@ -197,9 +197,9 @@
                      
                     <i class="randomicons iconfolder" ></i>
                             
-                                <a href="/categories/%E7%94%9F%E6%B4%BB%E9%9A%8F%E8%AE%B0/">生活随记</a>
+                                <a href="/categories/%E5%AE%9E%E6%93%8D%E9%A1%B9%E7%9B%AE/">实操项目</a>
                             
-                                <a href="/categories/%E7%94%9F%E6%B4%BB%E9%9A%8F%E8%AE%B0/%E4%BA%AC%E9%83%BD%E5%A4%A7%E5%AD%A6%E5%A4%87%E8%80%83/">京都大学备考</a>
+                                <a href="/categories/%E5%AE%9E%E6%93%8D%E9%A1%B9%E7%9B%AE/Hexo%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BB%BA%E7%AB%99/">Hexo自定义建站</a>
                             
                         </span>
                     |
@@ -207,7 +207,7 @@
                     <i class="randomicons iconnumber"></i> 
                     
                         <span class="post-count"s>
-                        <a>637words</a>
+                        <a>520words</a>
                         </span>
                     |
                     
@@ -222,30 +222,43 @@
         </header>
 
         <div class="post-content">
-            <h1 id="周目标"><a href="#周目标" class="headerlink" title="周目标"></a>周目标</h1><p><strong>高等代数</strong>：行列式，线性方程组，矩阵和二次型<br>至少把《高等代数·辅导与习题解答》（之后都称其为《高辅》）的基础题刷一遍<br><strong>数学分析</strong>：函数极限，数列极限和一点点导数</p>
-<h2 id="第一天"><a href="#第一天" class="headerlink" title="第一天"></a>第一天</h2><blockquote>
-<p>Date: 2020.10.8，周四</p>
+            <h2 id="修改前"><a href="#修改前" class="headerlink" title="修改前"></a>修改前</h2><img src="https://res.cloudinary.com/kisaragiry/image/upload/v1602420837/ksrgtech.com/%5BHexo%20Site%20Building%5D/2th/_2020-09-21_171203_azycie.png" width=90%>
+
+<h2 id="修改后"><a href="#修改后" class="headerlink" title="修改后"></a>修改后</h2><img src="https://res.cloudinary.com/kisaragiry/image/upload/v1602420838/ksrgtech.com/%5BHexo%20Site%20Building%5D/2th/_2020-09-28_190132_wgansm.png" width=90%>
+
+<h2 id="修改说明"><a href="#修改说明" class="headerlink" title="修改说明"></a>修改说明</h2><p><font color=#aeaca8><strong>乍一看好像变化不大哈</strong></font><br><strong>在原先Chic主题基础上做的修改有以下几点</strong></p>
+<ul>
+<li>主页的文字、链接和icon的修改</li>
+<li>文章页的自定义修改</li>
+<li>分类页面的创建及自定义修改</li>
+<li>标签页的创建及自定义修改</li>
+<li>关于页面的创建及修改</li>
+<li>创建中文页面</li>
+</ul>
+<p><strong>待更新的功能</strong></p>
+<ul>
+<li>评论功能</li>
+</ul>
+<h2 id="Hexo工作原理"><a href="#Hexo工作原理" class="headerlink" title="Hexo工作原理"></a>Hexo工作原理</h2><p>在修改之前有必要了解下hexo这个博客框架的工作原理。</p>
+<p>hexo会通过一些模版文件，渲染出一个个静态的html文件；具体原理如下：</p>
+<p>数据+模板文件+解析工具⇒ html文件</p>
+<p>数据(博文，图片等)按一个模板文件(ejs文件)，在解析工具(hexo)的帮助下生成一个html文件</p>
+<p>所以，想要修改主页，就需要在ejs文件的基础上修改。</p>
+<p>我先了解到，我们的主页的html文件是按**<em>layout.ejs**</em>这个文件来生成的，这个文件在<code>~/theme/Chic/layout/***layout.ejs***</code></p>
+<p>发现这个文件实质还是一个html文件</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;&lt;%= config.language %&gt;&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">%-</span> <span class="attr">partial</span>(&#x27;<span class="attr">_partial</span>/<span class="attr">head</span>&#x27;,&#123;<span class="attr">cache:</span> <span class="attr">true</span>&#125;) %&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;wrapper&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">%-</span> <span class="attr">partial</span>(&#x27;<span class="attr">_partial</span>/<span class="attr">header</span>&#x27;,&#123;<span class="attr">cache:</span> <span class="attr">true</span>&#125;) %&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;main&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">%-</span> <span class="attr">body</span> %&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">%-</span> <span class="attr">partial</span>(&#x27;<span class="attr">_partial</span>/<span class="attr">footer</span>&#x27;,&#123;<span class="attr">cache:</span> <span class="attr">true</span>&#125;) %&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在**<em>layout.ejs**</em>文件里，我们能看到整个html的<code>body</code>的组成是</p>
+<p><code>wrapper</code>（第七行）</p>
+<p><code>header</code> （第八行，对应的文件在**<em>header.ejs**</em>）</p>
+<p><code>main</code>（第九行，对应的文件在**<em>profile.ejs**</em>）</p>
+<p><code>footer</code>（第十二行，对应的文件在**<em>footer.ejs**</em>）</p>
+<p><em>解释下部分代码的意思</em></p>
+<p>第八行代码，<code>partial</code>的作用是指向外部的模板文件。这里是提到的文件在<code>_partial/header</code>里面，文件全名是**<em>header.ejs**</em></p>
+<p>第十行代码，<code>&lt;%- body %&gt;</code>的作用是同时引入 <strong><em>post.ejs</em></strong> 和 <strong><em>index.ejs</em></strong>两个文件，这两个文件都在<code>~/theme/Chic/layout</code>里面</p>
+<blockquote>
+<p>官方文件</p>
 </blockquote>
-<p>从不会把周一当第一天的人</p>
-<h3 id="高等代数"><a href="#高等代数" class="headerlink" title="高等代数"></a>高等代数</h3><p>进度比我想象的快，今天把《高辅》上的<strong>行列式</strong>的基础题刷了一遍，明天计划把剩下的补充题做了，计划…<br>我省略了第一章的多项式，打算最后再来看一看，反正内容不多也挺简单。</p>
-<h3 id="数学分析"><a href="#数学分析" class="headerlink" title="数学分析"></a>数学分析</h3><p>只是复习了一点点点，把一些常见的<strong>不等式的证明</strong>给看了一遍，然后就是一些很小的定理和概念。虽然计算题做着很爽，但大多数时候我还是更愿意做证明题，但如果把所有定理从头到尾都证明一遍，时间非常的紧促，留给自己复习的时间不多，得尽快进入状态呢😔</p>
-<h2 id="第二天"><a href="#第二天" class="headerlink" title="第二天"></a>第二天</h2><blockquote>
-<p>Date: 2020.10.9 周五</p>
-</blockquote>
-<p>上午有兼职，今天余下的时间只够复习数学分析</p>
-<h3 id="数学分析-1"><a href="#数学分析-1" class="headerlink" title="数学分析"></a>数学分析</h3><p>昨天复习完很难受，进度太慢了，我想着可能是书的原因，今天换上了史济怀的《数学分析教程》（以后都之为数分教程），比我之前看的伍胜健的黄皮《数学分析》要更加有条理一些，例题和习题也更“正常”一些。<br>复习了数列的收敛，做了很多相关的证明题，算是有点上手了。</p>
-<h2 id="第三天"><a href="#第三天" class="headerlink" title="第三天"></a>第三天</h2><blockquote>
-<p>Date: 2020.10.10 周六</p>
-</blockquote>
-<p>今天几乎没怎么复习，上午兼职，下午有一个线上的日语考试</p>
-<h3 id="高等代数-1"><a href="#高等代数-1" class="headerlink" title="高等代数"></a>高等代数</h3><p>做了几道《高辅》的题，就没了…</p>
-<h3 id="数学分析-2"><a href="#数学分析-2" class="headerlink" title="数学分析"></a>数学分析</h3><p>做了两点数列极限的题，也没了…</p>
-<h2 id="第四天"><a href="#第四天" class="headerlink" title="第四天"></a>第四天</h2><blockquote>
-<p>Date: 2020.10.11 周日</p>
-</blockquote>
-<p>经过今天的复习，我决定修改一下复习方针，得有重点的复习了，我之前是看见一个论断就想去证明一下，但这样效率太低了。高代的话，先把重点放在二次型，矩阵这一章就做几道代表性的题过一下就行。数分的话，哎…真不知道该怎么复习…</p>
-<h3 id="高等代数-2"><a href="#高等代数-2" class="headerlink" title="高等代数"></a>高等代数</h3><p>第二章行列式结束！</p>
-<h3 id="数学分析-3"><a href="#数学分析-3" class="headerlink" title="数学分析"></a>数学分析</h3><p>只看复习了，《数分教程》1.4的收敛数列的性质，进度慢到让我怀疑自己的水平了…</p>
 
         </div>
 
@@ -260,7 +273,7 @@
                 
                     <p class="copyright-item">
                         <span>文章链接:</span>
-                        <span><a href="http://ksrgtech.com/2020/10/06/TheoreticalStudy/ExamPrepForKyotoUni/WeeklySummary1/">http://ksrgtech.com/2020/10/06/TheoreticalStudy/ExamPrepForKyotoUni/WeeklySummary1/</a></span>
+                        <span><a href="http://ksrgtech.com/2020/10/11/HandsOnProjects/HexoSiteBuilding/%2/">http://ksrgtech.com/2020/10/11/HandsOnProjects/HexoSiteBuilding/%2/</a></span>
                     </p>
                 
                 
@@ -284,7 +297,7 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/%E5%A4%87%E8%80%83/"># 备考</a>
+                        <a href="/tags/Hexo/"># Hexo</a>
                     
                         
                 </span>
@@ -297,10 +310,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2020/10/11/HandsOnProjects/HexoSiteBuilding/%252/">【Hexo自定义建站】#2 主页的修改介绍</a>
             
-            
-            <a class="next" rel="next" href="/2020/10/06/TheoreticalStudy/ExamPrepForKyotoUni/intro/">【京大备考】专题介绍</a>
+            <a class="next" rel="next" href="/2020/10/06/TheoreticalStudy/ExamPrepForKyotoUni/WeeklySummary1/">【京大备考】周总结#1</a>
             
         </section>
 
