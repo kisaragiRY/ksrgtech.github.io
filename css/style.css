@@ -149,8 +149,22 @@ template {
   font-weight: 300;
   font-display: swap;
 }
+@font-face {
+  font-family: 'Alef';
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/alef-v12-latin-regular.eot"); /* IE9 Compat Modes */
+  src: local('Alef Regular'), local('Alef-Regular'), url("../fonts/alef-v12-latin-regular.eot?#iefix") format('embedded-opentype'), url("../fonts/alef-v12-latin-regular.woff2") format('woff2'), url("../fonts/alef-v12-latin-regular.woff") format('woff'), url("../fonts/alef-v12-latin-regular.ttf") format('truetype'), url("../fonts/alef-v12-latin-regular.svg#Alef") format('svg'); /* Legacy iOS */
+}
+@font-face {
+  font-family: 'Sawarabi Gothic';
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/sawarabi-gothic-v8-vietnamese_latin_japanese-regular.eot"); /* IE9 Compat Modes */
+  src: local('Sawarabi Gothic'), local('SawarabiGothic-Regular'), url("../fonts/sawarabi-gothic-v8-vietnamese_latin_japanese-regular.eot?#iefix") format('embedded-opentype'), url("../fonts/sawarabi-gothic-v8-vietnamese_latin_japanese-regular.woff2") format('woff2'), url("../fonts/sawarabi-gothic-v8-vietnamese_latin_japanese-regular.woff") format('woff'), url("../fonts/sawarabi-gothic-v8-vietnamese_latin_japanese-regular.ttf") format('truetype'), url("../fonts/sawarabi-gothic-v8-vietnamese_latin_japanese-regular.svg#SawarabiGothic") format('svg'); /* Legacy iOS */
+}
 html {
-  font-family: 'Microsoft Jhenghei', Lantinghei SC, 'lanting', PingFang SC, Seguo UI, Microsoft Yahei, Arial;
+  font-family: 'Sawarabi Gothic', 'Alef', 'Microsoft  Jhenghei', Lantinghei SC, 'lanting', PingFang SC, Seguo UI, Microsoft Yahei, Arial;
 }
 html::-webkit-scrollbar {
   width: 8px;
@@ -165,7 +179,7 @@ html::-webkit-scrollbar-thumb:hover {
   background-color: #ddd;
 }
 body {
-  font-size: 11pt;
+  font-size: 12pt;
   font-weight: normal;
   line-height: 2em;
   background-color: #fff;
@@ -850,6 +864,7 @@ header label {
   line-height: 1.5em;
 }
 .post-wrap .post-meta {
+  font-size: 15px;
   color: rgba(85,85,85,0.529) !important;
 }
 .dark-theme .post-wrap .post-meta {
@@ -1059,6 +1074,9 @@ header label {
   border-top: 1px solid #e8e8e8;
   border-bottom: 1px solid #e8e8e8;
 }
+.post-copyright p {
+  padding-left: 6px;
+}
 .post-copyright a {
   color: #2d96bd;
 }
@@ -1105,6 +1123,9 @@ header label {
 .post-content h4 code,
 .post-content h5 code {
   font-size: inherit;
+}
+.post-content p code {
+  font-size: 15px;
 }
 .post-content figure.highlight {
   margin: 1em 0;
