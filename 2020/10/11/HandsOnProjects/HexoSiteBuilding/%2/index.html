@@ -12,7 +12,7 @@
 
 
 
-<title>【Hexo自定义建站】#2 主页的修改介绍 | KSRGTech</title>
+<title>【Hexo自定义建站】#2 主页页眉的修改 | KSRGTech</title>
 
 
 
@@ -177,7 +177,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">【Hexo自定义建站】#2 主页的修改介绍</h1>
+            <h1 class="post-title">【Hexo自定义建站】#2 主页页眉的修改</h1>
             
                 <div class="post-meta">
                      
@@ -207,14 +207,14 @@
                     <i class="randomicons iconnumber"></i> 
                     
                         <span class="post-count"s>
-                        <a>520words</a>
+                        <a>962words</a>
                         </span>
                     |
                     
                     <i class="randomicons icontime"></i> 
                     
                         <span class="post-count" >
-                        <a>2min</a>
+                        <a>3min</a>
                         </span>
                     
                 </div>
@@ -222,43 +222,90 @@
         </header>
 
         <div class="post-content">
-            <h2 id="修改前"><a href="#修改前" class="headerlink" title="修改前"></a>修改前</h2><img src="https://res.cloudinary.com/kisaragiry/image/upload/v1602420837/ksrgtech.com/%5BHexo%20Site%20Building%5D/2th/_2020-09-21_171203_azycie.png" width=90%>
+            <h2 id="Hexo工作原理"><a href="#Hexo工作原理" class="headerlink" title="Hexo工作原理"></a>Hexo工作原理</h2><p><strong>在修改之前有必要了解下Hexo这个博客框架的工作原理。</strong><br>Hexo会通过一些模版文件，渲染出一个个静态的html文件，即：</p>
+<table><tbody>
+    <tr>
+        <th bgcolor="#ffcf94">数据+模板文件+解析工具⇒ html文件 </th>
+    <tr>
+    <tr>
+        <th style="font-weight:normal"><strong>数据</strong>(博文，图片等)按一个<strong>模板文件</strong>(ejs文件)在<strong>解析工具</strong>(Hexo)的帮助下生成一个html文件</th>
+    <tr>
+</table>
 
-<h2 id="修改后"><a href="#修改后" class="headerlink" title="修改后"></a>修改后</h2><img src="https://res.cloudinary.com/kisaragiry/image/upload/v1602420838/ksrgtech.com/%5BHexo%20Site%20Building%5D/2th/_2020-09-28_190132_wgansm.png" width=90%>
-
-<h2 id="修改说明"><a href="#修改说明" class="headerlink" title="修改说明"></a>修改说明</h2><p><font color=#aeaca8><strong>乍一看好像变化不大哈</strong></font><br><strong>在原先Chic主题基础上做的修改有以下几点</strong></p>
-<ul>
-<li>主页的文字、链接和icon的修改</li>
-<li>文章页的自定义修改</li>
-<li>分类页面的创建及自定义修改</li>
-<li>标签页的创建及自定义修改</li>
-<li>关于页面的创建及修改</li>
-<li>创建中文页面</li>
-</ul>
-<p><strong>待更新的功能</strong></p>
-<ul>
-<li>评论功能</li>
-</ul>
-<h2 id="Hexo工作原理"><a href="#Hexo工作原理" class="headerlink" title="Hexo工作原理"></a>Hexo工作原理</h2><p>在修改之前有必要了解下hexo这个博客框架的工作原理。</p>
-<p>hexo会通过一些模版文件，渲染出一个个静态的html文件；具体原理如下：</p>
-<p>数据+模板文件+解析工具⇒ html文件</p>
-<p>数据(博文，图片等)按一个模板文件(ejs文件)，在解析工具(hexo)的帮助下生成一个html文件</p>
 <p>所以，想要修改主页，就需要在ejs文件的基础上修改。</p>
-<p>我先了解到，我们的主页的html文件是按**<em>layout.ejs**</em>这个文件来生成的，这个文件在<code>~/theme/Chic/layout/***layout.ejs***</code></p>
+<hr>
+<p>我们的主页的html文件是按<strong>layout.ejs</strong>这个文件来生成的，这个文件在<code>~/theme/Chic/layout/layout.ejs</code></p>
 <p>发现这个文件实质还是一个html文件</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;&lt;%= config.language %&gt;&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">%-</span> <span class="attr">partial</span>(&#x27;<span class="attr">_partial</span>/<span class="attr">head</span>&#x27;,&#123;<span class="attr">cache:</span> <span class="attr">true</span>&#125;) %&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;wrapper&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">%-</span> <span class="attr">partial</span>(&#x27;<span class="attr">_partial</span>/<span class="attr">header</span>&#x27;,&#123;<span class="attr">cache:</span> <span class="attr">true</span>&#125;) %&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;main&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">%-</span> <span class="attr">body</span> %&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">%-</span> <span class="attr">partial</span>(&#x27;<span class="attr">_partial</span>/<span class="attr">footer</span>&#x27;,&#123;<span class="attr">cache:</span> <span class="attr">true</span>&#125;) %&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>在**<em>layout.ejs**</em>文件里，我们能看到整个html的<code>body</code>的组成是</p>
+<p>在<strong>layout.ejs</strong>文件里，我们能看到整个html的<code>body</code>的组成是</p>
 <p><code>wrapper</code>（第七行）</p>
-<p><code>header</code> （第八行，对应的文件在**<em>header.ejs**</em>）</p>
-<p><code>main</code>（第九行，对应的文件在**<em>profile.ejs**</em>）</p>
-<p><code>footer</code>（第十二行，对应的文件在**<em>footer.ejs**</em>）</p>
-<p><em>解释下部分代码的意思</em></p>
-<p>第八行代码，<code>partial</code>的作用是指向外部的模板文件。这里是提到的文件在<code>_partial/header</code>里面，文件全名是**<em>header.ejs**</em></p>
-<p>第十行代码，<code>&lt;%- body %&gt;</code>的作用是同时引入 <strong><em>post.ejs</em></strong> 和 <strong><em>index.ejs</em></strong>两个文件，这两个文件都在<code>~/theme/Chic/layout</code>里面</p>
+<p><code>header</code> （第八行，对应的文件在<strong>header.ejs</strong>）</p>
+<p><code>main</code>（第九行，对应的文件在<strong>profile.ejs</strong>）</p>
+<p><code>footer</code>（第十二行，对应的文件在<strong>footer.ejs</strong>）</p>
+<p><strong>解释下部分代码的意思</strong></p>
+<p>第八行代码<code>partial</code>的作用是指向外部的模板文件。这里是提到的文件在<code>_partial/header</code>里面，文件全名是<strong>header.ejs</strong></p>
+<p>第十行代码<code>&lt;%- body %&gt;</code>的作用是同时引入<strong>post.ejs</strong> 和<strong>index.ejs</strong>两个文件，这两个文件都在<code>~/theme/Chic/layout</code>里面</p>
 <blockquote>
-<p>官方文件</p>
+<p><a target="_blank" rel="noopener" href="https://hexo.io/docs/templates#Layouts">官方文件的Layout说明</a></p>
 </blockquote>
+<h2 id="页眉的左边"><a href="#页眉的左边" class="headerlink" title="页眉的左边"></a>页眉的左边</h2><table rules=none><tbody>
+    <tr >
+        <th>Before</strong></th>
+        <th>After</th>
+    </tr>
+    <tr>
+        <th><img src="https://res.cloudinary.com/kisaragiry/image/upload/v1602420837/ksrgtech.com/%5BHexo%20Site%20Building%5D/2th/_2020-09-22_223113_bmkjmn.png"></th>
+        <th><img src="https://res.cloudinary.com/kisaragiry/image/upload/v1602489353/ksrgtech.com/%5BHexo%20Site%20Building%5D/2th/_2020-09-21_202028_iqjssc.png"></th>
+    </tr>
+</table>
+
+<p><strong>目标：</strong></p>
+<p>将导航改成自定义的文字</p>
+<p><strong>方法：</strong></p>
+<ol>
+<li>先在浏览器里面F12看一下html中导航对应的<code>class</code>名；</li>
+<li>因为导航属于<code>header</code>部分，所以去<strong>header.ejs</strong>里面找这个<code>class</code>名对应内容，发现它指给主题下的配置文件<strong>_config.yml</strong>里面一个叫<code>navname</code>的变量</li>
+<li>接着在<strong>_config.yml</strong>，对<code>navname</code>进行修改</li>
+</ol>
+<p><strong>实现：</strong></p>
+<ol>
+<li><p>找到对应的class名是<code>class=&#39;navbar-header header-logo&#39;</code> </p>
+ <img src="https://res.cloudinary.com/kisaragiry/image/upload/v1602420837/ksrgtech.com/%5BHexo%20Site%20Building%5D/2th/_2020-09-21_181400_fiyj9n.png">
+</li>
+<li><p>在<strong>header.ejs</strong>里面能找到对应的<code>navbar-header header-logo</code>并且其对应的文字是<code>theme.navname</code></p>
+<p><code>theme.XXX</code>的意思是主题的配置文件中的XXX变量，主题配置文件在<code>~/themes/Chic/_config.yml</code></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;navbar-header header-logo&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;&lt;%- config.root %&gt;&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span> <span class="attr">theme.navname</span> %&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>找到主题下的配置文件<strong>_config.yml</strong>，对<code>navname</code>进行修改，改成你想要的名字，最后保存文件</p>
+ <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Header</span></span><br><span class="line"><span class="attr">navname:</span> <span class="string">Kisaragi&#x27;s</span> <span class="string">Tech</span> <span class="string">Blog</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在根目录下，也就是themes上一级的目录里，打开Git bash分别输入<code>hexo g</code>和<code>hexo s</code></p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$hexo</span> g</span><br><span class="line"><span class="variable">$hexo</span> d</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p><strong>最后在浏览器里面打开<code>localhost:4000</code>，可以看到效果</strong></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://hexo.io/docs/commands.html"><strong>来自Hexo官方文档</strong></a><br>生成静态文件<br>    <code>$ hexo generate</code> or <code>$ hexo g</code></br><br>输入以下命令以启动服务器，您的网站会在 <a target="_blank" rel="noopener" href="http://localhost:4000/">http://localhost:4000</a> 下启动。<br>    <code>$ hexo server</code> or <code>$ hexo server</code></p>
+</blockquote>
+<h2 id="页眉右边"><a href="#页眉右边" class="headerlink" title="页眉右边"></a>页眉右边</h2><p><font color=#aeaca8><strong>具体页面的修改，和中文页面的创建放在以后的博文里详解</strong></font></p>
+<p><strong>目标：</strong> </p>
+<p>Categories，Tags和About没有对应页面，因此需要创建新页面</p>
+<p><strong>方法：</strong> </p>
+<ol>
+<li>用bash命令添加新页面，会在根目录的<code>source</code>文件夹下生成同名的文件夹，并且文件夹里会有一个<strong>index.md</strong>的文件，你也可以手动添加文件和文件夹，效果是一样的</li>
+<li>在主题配置文件<strong>_condig.yml</strong>中修改，连接页眉的按键和新建的页面</li>
+</ol>
+<p><strong>实现：</strong></p>
+<ol>
+<li>在hexo根目录git bash输入 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$hexo</span> new page category</span><br><span class="line"><span class="variable">$hexo</span> new page tag</span><br><span class="line"><span class="variable">$hexo</span> new page about</span><br></pre></td></tr></table></figure></li>
+<li>在<strong>_condig.yml</strong>中修改按键名和对应的链接 <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># navigatior items</span></span><br><span class="line"><span class="comment">#按键名:链接</span></span><br><span class="line"><span class="attr">nav:</span></span><br><span class="line"><span class="attr">Posts:</span> <span class="string">/archives</span></span><br><span class="line"><span class="attr">Categories:</span> <span class="string">/category</span></span><br><span class="line"><span class="attr">Tags:</span> <span class="string">/tag</span></span><br><span class="line"><span class="attr">About:</span> <span class="string">/About</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<hr>
+<p><strong><font size=5>未完待续…</font></strong></p>
+<p>转到上一篇：<a href="https://ksrgtech.com/2020/10/06/HandsOnProjects/HexoSiteBuilding/%251/">【Hexo自定义建站】#1 建站的初衷/成本/工具/主题</a><br>转到下一篇：待更新</p>
 
         </div>
 
