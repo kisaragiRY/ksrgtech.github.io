@@ -1124,7 +1124,8 @@ header label {
 .post-content h5 code {
   font-size: inherit;
 }
-.post-content p code {
+.post-content p code,
+.post-content li code {
   font-size: 15px;
 }
 .post-content figure.highlight {
