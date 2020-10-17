@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Kisaragi">
+
+
+
+
+
+<title>基于LSTM的哔哩哔哩股票预测·超详细教程 | KSRGTech</title>
+
+
+
+    <link rel="icon" href="https://res.cloudinary.com/kisaragiry/image/upload/v1601826746/ksrgtech.com/Website_Favicon_jt5zls.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Kisaragi&#39;s Tech Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives" target="_self">文章</a>
+                
+                    <a class="menu-item" href="/category" target="_self">分类</a>
+                
+                    <a class="menu-item" href="/tag" target="_self">标签</a>
+                
+                    <a class="menu-item" href="/About" target="_self">关于</a>
+                
+                    <a class="menu-item" href="https://ksrgtech.com/en" target="_self">English</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Kisaragi&#39;s Tech Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/About">关于</a>
+                
+                    <a class="menu-item" href="https://ksrgtech.com/en">English</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">展开</a>
+        <a onclick="go_top()">顶部</a>
+        <a onclick="go_bottom()">底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "收起"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "展开"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">基于LSTM的哔哩哔哩股票预测·超详细教程</h1>
+            
+                <div class="post-meta">
+                     
+                    <i class="randomicons iconcalendar"></i>
+                    
+                        <span class="post-time">
+                        <a href="#">October 17, 2020</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">|
+                     
+                    <i class="randomicons iconfolder" ></i>
+                            
+                                <a href="/categories/%E5%AE%9E%E6%93%8D%E9%A1%B9%E7%9B%AE/">实操项目</a>
+                            
+                                <a href="/categories/%E5%AE%9E%E6%93%8D%E9%A1%B9%E7%9B%AE/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E9%A1%B9%E7%9B%AE/">机器学习项目</a>
+                            
+                        </span>
+                    |
+                    
+                    <i class="randomicons iconnumber"></i> 
+                    
+                        <span class="post-count"s>
+                        <a>2.3k words</a>
+                        </span>
+                    |
+                    
+                    <i class="randomicons icontime"></i> 
+                    
+                        <span class="post-count" >
+                        <a>9min</a>
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <div align=center>
+<img src="https://img-blog.csdnimg.cn/20200820184106209.png">
+</div>
+<div align=right color=#f4f4f4 size=.5>
+图片来源:https://www.bilibili.com/read/cv328714/
+</div>
+
+<p>&emsp; </p>
+<p><font color=#c5181e><strong>本视频也有对应的视频(6min)：</strong></font><br><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1dk4y117nz">https://www.bilibili.com/video/BV1dk4y117nz</a></p>
+<p>本教程的<strong>完整代码:</strong><br><a target="_blank" rel="noopener" href="https://github.com/kisaragiRY/Bilibili-Stock-Prediction">https://github.com/kisaragiRY/Bilibili-Stock-Prediction</a></p>
+<p>并且作为补充，想了解<strong>LSTM具体原理</strong>的同学可以看一下colah的博文：<br><strong>英文原版：</strong><br><a target="_blank" rel="noopener" href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/">http://colah.github.io/posts/2015-08-Understanding-LSTMs/</a><br><strong>中文翻译版：</strong><br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/95d5c461924c">https://www.jianshu.com/p/95d5c461924c</a></p>
+<p>&emsp; </p>
+<p><font size=5><strong>让我们正式开始吧！</strong></font></p>
+<p>&emsp;<br>&emsp; </p>
+<h1 id="1-问题描述"><a href="#1-问题描述" class="headerlink" title="1  问题描述"></a>1  问题描述</h1><hr>
+
+<p>在这篇文章中，我们将应用一个叫<strong>Long short-term memory (LSTM)</strong> 的循环神经网络(Recurrent Neural Network, RNN)，对<strong>bilibili</strong>（NASDAQ: BILI）从<strong>上市2018-3-28</strong>到<strong>2020-8-18</strong>的股票数据进行分析及预测，并详细介绍其Python代码的实现。</p>
+<p>想要预测精确的股票价格是<strong>不可能</strong>的，神经网络算法仅能帮助探索一下股票的<strong>大致走势</strong>，所以</p>
+<p><font size=5 color=#c5181e><strong>注意！！此篇文章内容不建议用于股票投资决策使用，所有结果仅作为参考！！</strong></font><br>&emsp;<br>&emsp; </p>
+<h1 id="2-模块准备"><a href="#2-模块准备" class="headerlink" title="2 模块准备"></a>2 模块准备</h1><hr>
+
+<p>如果没有某个模块，如<code>pandas_datareader</code>，可以在<strong>命令窗口</strong>输入以下代码来下载</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$pip</span> install pandas_datareader</span><br></pre></td></tr></table></figure>
+<p>几乎所有Python的模块或包的下载方式都是这样</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$pip</span> install [模块的名字]</span><br></pre></td></tr></table></figure>
+<p>接下来引入本篇文章要用上的所有模块</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#引入相关模块</span></span><br><span class="line"><span class="comment">#读取数据用的模块</span></span><br><span class="line"><span class="keyword">from</span> pandas_datareader <span class="keyword">import</span> data <span class="keyword">as</span> pdr</span><br><span class="line"><span class="comment">#数据预处理用的模块</span></span><br><span class="line"><span class="keyword">import</span> math</span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> MinMaxScaler</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="comment">#建立模型用的模块</span></span><br><span class="line"><span class="keyword">from</span> keras.models <span class="keyword">import</span> Sequential</span><br><span class="line"><span class="keyword">from</span> keras.layers <span class="keyword">import</span> Dense, Dropout, LSTM, TimeDistributed</span><br><span class="line"><span class="comment">#作图用的模块</span></span><br><span class="line"><span class="keyword">import</span> missingno <span class="keyword">as</span> msno</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line">sns.set(color_codes=<span class="string">&#x27;Ture&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>&emsp;<br>&emsp; </p>
+<h1 id="3-数据准备"><a href="#3-数据准备" class="headerlink" title="3 数据准备"></a>3 数据准备</h1><hr>
+
+<h2 id="3-1-获取数据"><a href="#3-1-获取数据" class="headerlink" title="3.1 获取数据"></a>3.1 获取数据</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#根据股票代码BILI,从雅虎财经上获取从2018-3-28到2020-8-18的股票数据</span></span><br><span class="line">df=pdr.get_data_yahoo(<span class="string">&#x27;BILI&#x27;</span>,start=<span class="string">&#x27;2018-03-28&#x27;</span>,end=<span class="string">&#x27;2020-08-18&#x27;</span>)</span><br><span class="line"><span class="comment">#查看数据</span></span><br><span class="line">df</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<div  align=center>
+<img src="https://img-blog.csdnimg.cn/20200818214943794.png" width=70% >
+</div>
+
+<p>数据有603行，6列。即样本量(samples)是603，特征数(features)是6，分别是当日最高价(High)，最低价(Low)，开盘价(Open)，收盘价(Close)，成交量(Volume)，调整后的收盘价(Adj Close)。<br>本篇文章只对<strong>收盘价</strong>这一列数据进行拟合及预测。</p>
+<h2 id="3-2-缺失值处理"><a href="#3-2-缺失值处理" class="headerlink" title="3.2 缺失值处理"></a>3.2 缺失值处理</h2><p>接下来我们要查看一下缺失值，若存在缺失值，我们则需要做一些相应处理，根据情况看是删除还是填充</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#可视化缺失值</span></span><br><span class="line">msno.matrix(df)</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<div  align=center>
+<img src="https://img-blog.csdnimg.cn/20200818221701935.png" width=80% >
+</div>
+
+<p>由上图可以看出，此数据是<strong>完整数据</strong>，没有缺失值，可以继续接下来的步骤</p>
+<h2 id="3-3-拆分训练集与测试集"><a href="#3-3-拆分训练集与测试集" class="headerlink" title="3.3 拆分训练集与测试集"></a>3.3 拆分训练集与测试集</h2><p>我们将取前80%的数据作为<strong>训练集</strong>来训练模型，后20%的数据作为<strong>测试集</strong>来测试模型的预测能力</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#将dataframe按索引降序排列</span></span><br><span class="line">data = df.sort_index(ascending=<span class="literal">True</span>, axis=<span class="number">0</span>)</span><br><span class="line"><span class="comment">#只用Close这一列，即只使用股票的收盘价来进行拟合和预测</span></span><br><span class="line">dataset=data[[<span class="string">&#x27;Close&#x27;</span>]].values</span><br><span class="line"></span><br><span class="line"><span class="comment">#取80%的数据作为训练集</span></span><br><span class="line">training_data_len=math.ceil(len(dataset)*<span class="number">.8</span>)</span><br><span class="line">train_data=dataset[<span class="number">0</span>:training_data_len,:]</span><br><span class="line"><span class="comment">#取剩下的数据作为测试集</span></span><br><span class="line"><span class="comment">#在做预测时，余下的数据的第一个数据，需要前60天的数据来预测，因此这倒溯了60天</span></span><br><span class="line">test_data = dataset[training_data_len<span class="number">-60</span>: , : ]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="3-4-数据归一化"><a href="#3-4-数据归一化" class="headerlink" title="3.4 数据归一化"></a>3.4 数据归一化</h2><p>这一步，会将数据映射到[0,1]区间，目的是为了提升模型的收敛速度，提升模型的精度。<br>这里采用的方法叫min-max标准化(Min-max normalization)或0-1标准化(0-1 normalization)<br>$$x_{norm}=\frac{x-min(x)}{max(x)-min(x)}$$</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#特征缩放</span></span><br><span class="line">scaler=MinMaxScaler(feature_range=(<span class="number">0</span>,<span class="number">1</span>))</span><br><span class="line">scaled_train=scaler.fit_transform(train_data)</span><br><span class="line">scaled_test=scaler.fit_transform(test_data)</span><br></pre></td></tr></table></figure>
+<h2 id="3-5-重构数据"><a href="#3-5-重构数据" class="headerlink" title="3.5 重构数据"></a>3.5 重构数据</h2><p>这一节的目的是使数据能符合算法的输入要求，分为三步</p>
+<ol>
+<li>将数据集拆分成x和y两部分，用x来预测y，将数据转变成<strong>时间序列和有监督学习问题</strong><br>为了图像说明简便，假如我们以3天为一个timestep，即用前3天的数据(橙色大框，绿色大框，x)来预测第4天的数据(橙色小框，绿色小框，y)。在此博客中，实际的<code>timesteps</code>取的是60，即用前60天数据预测第61天数据。</li>
+</ol>
+<div  align=center>
+<img src="https://img-blog.csdnimg.cn/20200819171743556.png" width=60% >
+</div>
+
+<ol start="2">
+<li>将<code>list</code>类型数据转变成<code>array</code>数据，以便第三步使用</li>
+<li>将二维数据转成三维数据。LSTM的输入需要一个<strong>三维数组(samples, timesteps, feature)</strong> 分别指样本量，时间步数，特征数目。<br><code>x_train</code>和<code>x_test</code>会作为LSTM的输入数据，而此时它俩是<strong>二维数据(samples, timsteps=60)</strong>  ,我们需要给这俩数据再添一维feature，因为我们只取了收盘价来分析，所以此处的<code>feature=1</code>。<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#训练集的重构</span></span><br><span class="line"><span class="comment">#1 分离x和y</span></span><br><span class="line">x_train=[]</span><br><span class="line">y_train=[]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">60</span>,len(scaled_train)):</span><br><span class="line">    x_train.append(scaled_train[i<span class="number">-60</span>:i,<span class="number">0</span>])</span><br><span class="line">    y_train.append(scaled_train[i,<span class="number">0</span>])</span><br><span class="line"><span class="comment">#2 将list类型数据转变成array数据</span></span><br><span class="line">x_train,y_train=np.array(x_train),np.array(y_train)</span><br><span class="line"><span class="comment">#3 将二维数据变成三维数据</span></span><br><span class="line">x_train=np.reshape(x_train,(x_train.shape[<span class="number">0</span>],x_train.shape[<span class="number">1</span>],<span class="number">1</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">#测试集的重构</span></span><br><span class="line"><span class="comment">#1 分离x和y</span></span><br><span class="line">x_test = []</span><br><span class="line">y_test = dataset[training_data_len: , : ] </span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">60</span>,len(scaled_test)):</span><br><span class="line">    x_test.append(scaled_test[i<span class="number">-60</span>:i,<span class="number">0</span>])</span><br><span class="line"><span class="comment">#2 将list类型数据转变成array数据</span></span><br><span class="line">x_test = np.array(x_test)</span><br><span class="line"><span class="comment">#3 将二维数据变成三维数据</span></span><br><span class="line">x_test = np.reshape(x_test, (x_test.shape[<span class="number">0</span>],x_test.shape[<span class="number">1</span>],<span class="number">1</span>))</span><br></pre></td></tr></table></figure>
+&emsp;<br>&emsp; </li>
+</ol>
+<h1 id="4-模型建立"><a href="#4-模型建立" class="headerlink" title="4. 模型建立"></a>4. 模型建立</h1><hr>
+
+<ul>
+<li><p>初始化神经网络：<code>Sequential()</code></p>
+</li>
+<li><p>LSTM层：<code>LSTM()</code><br>一般<strong>两层LSTM</strong>就能比较好的拟合数据了，多层的LSTM会提升模型的拟合度，但同时也增加了模型的复杂度和训练的难度，有兴趣的读者也可以试试多层LSTM效果。<br>参数<code>units=50</code>的意思是该层有50个LSTM神经元，并且这一层输出的是一个50维的向量<br>参数<code>input_shape</code>需要我们输入一个二维数组，包含<code>timesteps</code>和<code>features</code>，即时间步数和特征数目<br>参数<code>return_sequences</code>是用来设定是否返回含有<code>timesteps</code>这一维的数组</p>
+<ul>
+<li><code>True</code>返回的是一个<strong>三维数组</strong>(batch size,timesteps,number of units)，分别指批数目，时间步数，神经元数目，</li>
+<li><code>False</code>返回的是一个<strong>二维数组</strong>(batch size, number of units)</li>
+</ul>
+</li>
+<li><p>防止过拟合的dropout层：<code>Dropout()</code><br>函数<code>Dropout(0.2)</code>意思是上一层输出的数据中，随机删除20%的数据</p>
+</li>
+<li><p>全连接的神经网络层：<code>Dense()</code><br>也叫Densely connected layer，意思是这一层的每个节点与上一层的所有节点相连，参数<code>unites=1</code>的意思是这一层有一个神经元。</p>
+</li>
+<li><p>神经网络编译：<code>compile()</code><br>用Adam来优化，以MSE(均方误差)为损失函数</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#构建模型</span></span><br><span class="line"><span class="comment">#初始化模型</span></span><br><span class="line">model = Sequential()</span><br><span class="line"><span class="comment">#LSTM层</span></span><br><span class="line">model.add(LSTM(units=<span class="number">50</span>, return_sequences=<span class="literal">True</span>,input_shape=(x_train.shape[<span class="number">1</span>],<span class="number">1</span>)))</span><br><span class="line"><span class="comment">#Dropout层</span></span><br><span class="line">model.add(Dropout(<span class="number">.2</span>))</span><br><span class="line"><span class="comment">#LSTM层</span></span><br><span class="line">model.add(LSTM(units=<span class="number">50</span>, return_sequences=<span class="literal">False</span>))</span><br><span class="line"><span class="comment">#Dropout层</span></span><br><span class="line">model.add(Dropout(<span class="number">.2</span>))</span><br><span class="line"><span class="comment">#全连接层</span></span><br><span class="line">model.add(Dense(units=<span class="number">1</span>))</span><br><span class="line"><span class="comment">#模型编译</span></span><br><span class="line">model.compile(optimizer=<span class="string">&#x27;adam&#x27;</span>, loss=<span class="string">&#x27;mean_squared_error&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>整体神经网络的结构如图</p>
+<div  align=center>
+<img src="https://img-blog.csdnimg.cn/20200819204738846.png" width=70% >
+</div>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#模型结构</span></span><br><span class="line">model.summary()</span><br></pre></td></tr></table></figure>
+<p>输出：(<em>能看到每层输出的数据结构以及参数个数</em>)</p>
+<div  align=center>
+<img src="https://img-blog.csdnimg.cn/20200819205255775.png" width=70% >
+</div>
+
+<p>&emsp; </p>
+<h1 id="5-模型拟合"><a href="#5-模型拟合" class="headerlink" title="5. 模型拟合"></a>5. 模型拟合</h1><hr>
+
+<p>用训练集数据<code>x_train</code>，<code>y_train</code>来训练上一步建立好的模型，本文不涉及调整参数的步骤，在这笔者只是对参数<code>batch_size</code>和<code>epochs</code>随机给了两个值25和10</p>
+<ul>
+<li><code>batch_size</code>：将完整的数据分为多次输入，一次输入的样本大小叫做<strong>batch_size</strong></li>
+<li><code>epochs</code>：完整的数据通过一次神经网络，称为一次<strong>epoch</strong></li>
+</ul>
+<p>而其实这两个值对模型拟合的好坏<strong>影响很大</strong>，笔者会在以后的文章中再仔细探讨一下如何调整参数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#拟合模型</span></span><br><span class="line">model.fit(x_train, y_train, batch_size=<span class="number">25</span>, epochs=<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+
+<p>&emsp; </p>
+<h1 id="6-模型预测"><a href="#6-模型预测" class="headerlink" title="6. 模型预测"></a>6. 模型预测</h1><hr>
+
+<p>用训练集训练好模型后，用测试集来做预测；<br>又因之前对<code>x_test</code>做过归一化处理，这里需要用<code>inverse_transform()</code>这个函数来将它复原</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#预测</span></span><br><span class="line">predictions = model.predict(x_test) </span><br><span class="line"><span class="comment">#还原 特征缩放</span></span><br><span class="line">predictions = scaler.inverse_transform(predictions)</span><br></pre></td></tr></table></figure>
+
+<p>&emsp; </p>
+<h1 id="7-预测结果可视化"><a href="#7-预测结果可视化" class="headerlink" title="7. 预测结果可视化"></a>7. 预测结果可视化</h1><hr>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#创建用来画图的dataframe</span></span><br><span class="line">train = data[:training_data_len]</span><br><span class="line">valid = data[training_data_len:]</span><br><span class="line"><span class="comment">#给valid添加新的一列，把预测值predictions赋值给新的一列</span></span><br><span class="line">valid[<span class="string">&#x27;Predictions&#x27;</span>] = predictions</span><br><span class="line"><span class="comment">#开始作图</span></span><br><span class="line"><span class="comment">#图像大小</span></span><br><span class="line">plt.figure(figsize=(<span class="number">16</span>,<span class="number">8</span>))</span><br><span class="line"><span class="comment">#图像标题</span></span><br><span class="line">plt.title(<span class="string">&#x27;Model&#x27;</span>)</span><br><span class="line"><span class="comment">#x轴</span></span><br><span class="line">plt.xlabel(<span class="string">&#x27;Date&#x27;</span>, fontsize=<span class="number">18</span>)</span><br><span class="line"><span class="comment">#y轴</span></span><br><span class="line">plt.ylabel(<span class="string">&#x27;Close Price USD ($)&#x27;</span>, fontsize=<span class="number">18</span>)</span><br><span class="line"><span class="comment">#画训练集的折线图</span></span><br><span class="line">plt.plot(train[<span class="string">&#x27;Close&#x27;</span>])</span><br><span class="line"><span class="comment">#分别画出真实值和预测值的折线图</span></span><br><span class="line">plt.plot(valid[[<span class="string">&#x27;Close&#x27;</span>, <span class="string">&#x27;Predictions&#x27;</span>]])</span><br><span class="line"><span class="comment">#展示图例</span></span><br><span class="line">plt.legend([<span class="string">&#x27;Train&#x27;</span>, <span class="string">&#x27;Val&#x27;</span>, <span class="string">&#x27;Predictions&#x27;</span>], loc=<span class="string">&#x27;lower right&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<div  align=center>
+<img src="https://img-blog.csdnimg.cn/20200820113922396.png" width=100% >
+</div>
+
+<p>由图可以看出算法LSTM的确能较为精确的预测出股票的浮动趋势</p>
+<p>&emsp; </p>
+<h1 id="8-本文的缺陷"><a href="#8-本文的缺陷" class="headerlink" title="8. 本文的缺陷"></a>8. 本文的缺陷</h1><hr>
+
+<ul>
+<li>本文只用了一种办法LSTM来做预测，其实还有很多别的方法，如传统的ARIMA，还有机器学习的办法比如k近邻等等</li>
+<li>本文未涉及参数调整。参数调整的方法有很多，除了手动调参，还可以借用一些算法比如网格搜索(Grid Search)，随机网格搜索(Random Search)，以及贝叶斯的办法。</li>
+</ul>
+<ol>
+<li>神经网络结构里的参数，比如<code>unites</code>（神经元数目）；</li>
+<li>拟合模型时<code>batch_size</code>和<code>epochs</code>这两个参数只是随便给了两个值。</li>
+</ol>
+<ul>
+<li>…（如果你发现更多的不足，请一定私信或在评论区留言~~</li>
+</ul>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>作者:</span>
+                        <span>Kisaragi</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>文章链接:</span>
+                        <span><a href="http://ksrgtech.com/2020/10/17/HandsOnProjects/Bilibili/">http://ksrgtech.com/2020/10/17/HandsOnProjects/Bilibili/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>许可:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>版权申明:</span>
+                         <span><strong>本网站的所有图片及文字所有权归属本人所有，受国际版权的保护。 如需转载许可请联系 </strong><a href="mailto:ksrgtech98@gmail.com">ksrgtech98@gmail.com</a></span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">Back</a>
+                <span>· </span>
+                <a href="/">Home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/10/17/HandsOnProjects/HexoSiteBuilding/%253/">【Hexo自定义建站】#3 主页的icon及其链接的修改</a>
+            
+            
+            <a class="next" rel="next" href="/2020/10/11/HandsOnProjects/HexoSiteBuilding/%252/">【Hexo自定义建站】#2 主页页眉的修改</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
+<script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '679b5900a997f7bf6ce0',
+        clientSecret: '0d72a2d321b7812b3c6d8e8580fe8485e22d66e7',
+        repo: 'kisaragiRY.github.io',
+        owner: 'KisaragiRY',
+        admin: 'KisaragiRY',
+        id: md5(location.pathname),      
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 5,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: false
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span> © 2020 Kisaragi.  All rights reserved.</span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

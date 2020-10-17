@@ -179,7 +179,7 @@ html::-webkit-scrollbar-thumb:hover {
   background-color: #ddd;
 }
 body {
-  font-size: 12pt;
+  font-size: 11pt;
   font-weight: normal;
   line-height: 2em;
   background-color: #fff;
@@ -1536,4 +1536,8 @@ a.toc-link{color:currentColor;height:100%}
 .post-content pre .keyword,
 .post-content pre .javascript .function {
   color: #8959a8;
+}
+.gt-container {
+  max-width: 780px;
+  margin: auto;
 }

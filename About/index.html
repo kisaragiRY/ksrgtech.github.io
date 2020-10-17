@@ -155,6 +155,28 @@
     </article>
 </div>
 
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
+<script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '679b5900a997f7bf6ce0',
+        clientSecret: '0d72a2d321b7812b3c6d8e8580fe8485e22d66e7',
+        repo: 'kisaragiRY.github.io',
+        owner: 'KisaragiRY',
+        admin: 'KisaragiRY',
+        id: md5(location.pathname),      
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 5,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: false
+      })
+      gitalk.render('gitalk-container')
+</script>
+
         </div>
         <footer id="footer" class="footer">
     <div class="copyright">
