@@ -2,7 +2,7 @@
   font-family: 'lanting';
   src: url("../fonts/lanting/lanting.eot"); /* IE9 */
   src: url("../fonts/lanting/lanting.eot?#iefix") format('embedded-opentype'), /* IE6-IE8 */ url("../fonts/lanting/lanting.woff2") format('woff2'), url("../fonts/lanting/lanting.woff") format('woff'), url("../fonts/lanting/lanting.ttf") format('truetype'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
-  font-weight: 300;
+  font-weight: 400;
   font-display: swap;
 }
 /* alef-regular - latin */
@@ -12,13 +12,4 @@
   font-weight: 400;
   src: url("../fonts/alef-v12-latin-regular.eot"); /* IE9 Compat Modes */
   src: local('Alef Regular'), local('Alef-Regular'), url("../fonts/alef-v12-latin-regular.eot?#iefix") format('embedded-opentype'), url("../fonts/alef-v12-latin-regular.woff2") format('woff2'), url("../fonts/alef-v12-latin-regular.woff") format('woff'), url("../fonts/alef-v12-latin-regular.ttf") format('truetype'), url("../fonts/alef-v12-latin-regular.svg#Alef") format('svg'); /* Legacy iOS */
-}
-/* m-plus-1p-regular - latin_japanese */
-/* sawarabi-gothic-regular - vietnamese_latin_japanese */
-@font-face {
-  font-family: 'Sawarabi Gothic';
-  font-style: normal;
-  font-weight: 400;
-  src: url("../fonts/sawarabi-gothic-v8-vietnamese_latin_japanese-regular.eot"); /* IE9 Compat Modes */
-  src: local('Sawarabi Gothic'), local('SawarabiGothic-Regular'), url("../fonts/sawarabi-gothic-v8-vietnamese_latin_japanese-regular.eot?#iefix") format('embedded-opentype'), url("../fonts/sawarabi-gothic-v8-vietnamese_latin_japanese-regular.woff2") format('woff2'), url("../fonts/sawarabi-gothic-v8-vietnamese_latin_japanese-regular.woff") format('woff'), url("../fonts/sawarabi-gothic-v8-vietnamese_latin_japanese-regular.ttf") format('truetype'), url("../fonts/sawarabi-gothic-v8-vietnamese_latin_japanese-regular.svg#SawarabiGothic") format('svg'); /* Legacy iOS */
 }
